@@ -12,13 +12,16 @@
     <!-- Standard CSS instead of Tailwind configuration -->
     <style>
         :root {
-            --apple-blue: #007AFF;
-            --apple-darkblue: #0062CC;
-            --apple-gray: #8E8E93;
-            --apple-lightgray: #F2F2F7;
-            --apple-red: #FF3B30;
-            --apple-green: #34C759;
-            --apple-black: #1D1D1F;
+            --dark-primary: #121212;
+            --dark-secondary: #1E1E1E;
+            --dark-accent: #C461FF;
+            --dark-accent-hover: #B347FF;
+            --dark-text: #E1E1E1;
+            --dark-text-secondary: #A0A0A0;
+            --dark-border: #333333;
+            --dark-shadow: rgba(0,0,0,0.3);
+            --dark-card: #252525;
+            --dark-header: #1A1A2E;
         }
         
         * {
@@ -29,12 +32,13 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--apple-lightgray);
-            color: var(--apple-black);
+            background-color: var(--dark-primary);
+            color: var(--dark-text);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
         
         .container {
@@ -45,10 +49,10 @@
         }
         
         header {
-            background-color: var(--apple-blue);
-            color: white;
-            padding: 1.5rem 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: var(--dark-header);
+            color: var(--dark-text);
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px var(--dark-shadow);
         }
         
         header h1 {
@@ -60,7 +64,8 @@
         header p {
             font-size: 1.25rem;
             text-align: center;
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
+            color: var(--dark-text-secondary);
         }
         
         main {
@@ -69,16 +74,22 @@
         }
         
         section {
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
+        }
+        
+        .game-section {
+            margin-top: 2rem;
+            margin-bottom: 4rem;
         }
         
         .game-container {
-            background-color: white;
+            background-color: var(--dark-secondary);
             border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 18px var(--dark-shadow);
             max-width: 1024px;
             margin: 0 auto;
+            border: 1px solid var(--dark-border);
         }
         
         .responsive-iframe {
@@ -96,25 +107,57 @@
             border: 0;
         }
         
+        .fullscreen-button {
+            display: inline-block;
+            background-color: var(--dark-accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px var(--dark-shadow);
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        
+        .fullscreen-button:hover {
+            background-color: var(--dark-accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        .fullscreen-button:active {
+            transform: translateY(0);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
         h2 {
             font-size: 1.8rem;
-            color: var(--apple-blue);
-            margin-bottom: 1rem;
+            color: var(--dark-accent);
+            margin-bottom: 1.25rem;
             font-weight: bold;
+            text-align: center;
         }
         
         .card {
-            background-color: white;
+            background-color: var(--dark-card);
             border-radius: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px var(--dark-shadow);
             padding: 1.5rem;
             max-width: 900px;
             margin: 0 auto;
+            border: 1px solid var(--dark-border);
         }
         
         .card p {
             font-size: 1.125rem;
             margin-bottom: 1rem;
+            color: var(--dark-text);
         }
         
         .card p:last-child {
@@ -131,6 +174,7 @@
             font-size: 1.25rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
+            color: var(--dark-accent);
         }
         
         ul {
@@ -141,13 +185,16 @@
         ul li {
             font-size: 1.125rem;
             margin-bottom: 0.5rem;
+            color: var(--dark-text);
         }
         
         footer {
-            background-color: var(--apple-black);
-            color: white;
+            background-color: var(--dark-header);
+            color: var(--dark-text-secondary);
             padding: 2rem 0;
             text-align: center;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dark-border);
         }
         
         footer p:first-child {
@@ -155,12 +202,13 @@
         }
         
         footer a {
-            color: var(--apple-blue);
+            color: var(--dark-accent);
             text-decoration: none;
         }
         
         footer a:hover {
             text-decoration: underline;
+            color: var(--dark-accent-hover);
         }
         
         /* Media Queries for Responsive Design */
@@ -185,12 +233,87 @@
             .two-column {
                 grid-template-columns: 1fr 1fr;
             }
+            
+            .game-section {
+                margin-top: 3rem;
+            }
+        }
+        
+        /* Mobile Optimization */
+        @media (max-width: 767px) {
+            header {
+                padding: 1.5rem 0;
+            }
+            
+            .game-container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            .fullscreen-mode {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1000;
+                background: black;
+                padding: 0;
+                margin: 0;
+                max-width: none;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+            
+            .fullscreen-mode .responsive-iframe {
+                padding-top: 0;
+                height: 100%;
+            }
+            
+            .fullscreen-mode .responsive-iframe iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .exit-fullscreen {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                z-index: 1001;
+                background: rgba(0,0,0,0.5);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                cursor: pointer;
+            }
+            
+            body.fullscreen-active {
+                overflow: hidden;
+            }
+            
+            .hidden-when-fullscreen {
+                display: block;
+            }
+            
+            body.fullscreen-active .hidden-when-fullscreen {
+                display: none;
+            }
         }
     </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header>
+    <header class="hidden-when-fullscreen">
         <div class="container">
             <h1>Monster Survivors</h1>
             <p>Survive the monster apocalypse in this action-packed roguelite adventure!</p>
@@ -198,10 +321,11 @@
     </header>
 
     <main class="container">
-        <section>
-            <div class="game-container">
+        <section class="game-section">
+            <div class="game-container" id="gameContainer">
                 <div class="responsive-iframe">
                     <iframe 
+                        id="gameFrame"
                         src="https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html" 
                         allowfullscreen
                         title="Play Monster Survivors Online"
@@ -209,9 +333,12 @@
                     </iframe>
                 </div>
             </div>
+            <div class="controls hidden-when-fullscreen">
+                <div class="fullscreen-button" id="fullscreenButton">Fullscreen Game</div>
+            </div>
         </section>
 
-        <section>
+        <section class="hidden-when-fullscreen">
             <h2>About Monster Survivors</h2>
             <div class="card">
                 <p>Monster Survivors is an intense roguelite survival game where you must fight off endless waves of monsters while collecting power-ups and leveling up your character. How long can you survive?</p>
@@ -220,7 +347,7 @@
             </div>
         </section>
 
-        <section>
+        <section class="hidden-when-fullscreen">
             <h2>How to Play</h2>
             <div class="card">
                 <div class="two-column">
@@ -238,7 +365,7 @@
             </div>
         </section>
 
-        <section>
+        <section class="hidden-when-fullscreen">
             <h2>Key Features</h2>
             <div class="card">
                 <ul>
@@ -253,11 +380,125 @@
         </section>
     </main>
 
-    <footer>
+    <footer class="hidden-when-fullscreen">
         <div class="container">
             <p>&copy; 2025 Monster Survivors. All Rights Reserved.</p>
-            <p>Play for free on <a href="https://monstersurvivors.online">MonsterSurvivors.online</a></p>
+            <p>Play for free at <a href="https://monstersurvivors.online">MonsterSurvivors.online</a></p>
         </div>
     </footer>
+
+    <button id="exitFullscreen" class="exit-fullscreen" style="display: none;">✕</button>
+
+    <script>
+        // Fullscreen functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const gameContainer = document.getElementById('gameContainer');
+            const fullscreenButton = document.getElementById('fullscreenButton');
+            const exitFullscreenButton = document.getElementById('exitFullscreen');
+            const body = document.body;
+            const gameFrame = document.getElementById('gameFrame');
+            
+            // Fixed function to properly handle fullscreen
+            fullscreenButton.addEventListener('click', function() {
+                // First try to use the Fullscreen API for true fullscreen
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen().then(() => {
+                        // 在全屏后自动聚焦iframe，解决键盘控制问题
+                        setTimeout(function() {
+                            gameFrame.focus();
+                        }, 100);
+                    });
+                } else if (gameFrame.webkitRequestFullscreen) { /* Safari */
+                    gameFrame.webkitRequestFullscreen();
+                    setTimeout(function() {
+                        gameFrame.focus();
+                    }, 100);
+                } else if (gameFrame.msRequestFullscreen) { /* IE11 */
+                    gameFrame.msRequestFullscreen();
+                    setTimeout(function() {
+                        gameFrame.focus();
+                    }, 100);
+                } else {
+                    // Fallback to CSS fullscreen mode
+                    gameContainer.classList.add('fullscreen-mode');
+                    body.classList.add('fullscreen-active');
+                    exitFullscreenButton.style.display = 'flex';
+                    setTimeout(function() {
+                        gameFrame.focus();
+                    }, 100);
+                }
+            });
+            
+            // Handle exiting fullscreen
+            exitFullscreenButton.addEventListener('click', function() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+                
+                gameContainer.classList.remove('fullscreen-mode');
+                body.classList.remove('fullscreen-active');
+                exitFullscreenButton.style.display = 'none';
+            });
+            
+            // Listen for fullscreen change events
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+            
+            function handleFullscreenChange() {
+                if (document.fullscreenElement || 
+                    document.webkitFullscreenElement || 
+                    document.mozFullScreenElement || 
+                    document.msFullscreenElement) {
+                    // 进入全屏模式时聚焦游戏区域
+                    setTimeout(function() {
+                        gameFrame.focus();
+                    }, 100);
+                } else {
+                    // Exit fullscreen mode
+                    gameContainer.classList.remove('fullscreen-mode');
+                    body.classList.remove('fullscreen-active');
+                    exitFullscreenButton.style.display = 'none';
+                }
+            }
+            
+            // 添加iframe的load事件，以确保它加载完成后可以接收键盘事件
+            gameFrame.addEventListener('load', function() {
+                gameFrame.setAttribute('tabindex', '0'); // 使iframe可以接收键盘焦点
+            });
+            
+            // Check if mobile device
+            function isMobileDevice() {
+                return (window.innerWidth <= 767);
+            }
+            
+            // If mobile access, add landscape orientation hint
+            if (isMobileDevice()) {
+                const orientationMessage = document.createElement('div');
+                orientationMessage.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:white;padding:15px;border-radius:10px;z-index:9999;display:none;text-align:center;';
+                orientationMessage.innerHTML = 'For the best experience, please rotate your device to landscape mode';
+                document.body.appendChild(orientationMessage);
+                
+                function checkOrientation() {
+                    if (window.matchMedia("(orientation: portrait)").matches && body.classList.contains('fullscreen-active')) {
+                        orientationMessage.style.display = 'block';
+                        setTimeout(function() {
+                            orientationMessage.style.display = 'none';
+                        }, 3000);
+                    }
+                }
+                
+                window.addEventListener('orientationchange', checkOrientation);
+                
+                // Initial check
+                checkOrientation();
+            }
+        });
+    </script>
 </body>
 </html>
